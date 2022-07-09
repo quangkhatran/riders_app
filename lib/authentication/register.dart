@@ -10,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../global/global.dart';
+import '../mainScreens/home_screen.dart';
 import '../widgets/loading_dialog.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/error_dialog.dart';
@@ -165,8 +166,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       saveDataToFirestore(currentUser!).then((value) {
         Navigator.pop(context);
         //send user to homepage
-        // Route newRoute = MaterialPageRoute(builder: (c) => HomeScreen());
-        // Navigator.pushReplacement(context, newRoute);
+        Route newRoute = MaterialPageRoute(builder: (c) => HomeScreen());
+        Navigator.pushReplacement(context, newRoute);
       });
     }
   }
