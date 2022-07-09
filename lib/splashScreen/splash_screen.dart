@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../authentication/auth_screen.dart';
 import '../global/global.dart';
 
 class MySplashScreen extends StatefulWidget {
@@ -18,8 +19,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
         //     context, MaterialPageRoute(builder: (c) => const HomeScreen()));
       } else {
         // if seller is NOT loggedin already
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (c) => const AuthScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => const AuthScreen()));
       }
     });
   }
