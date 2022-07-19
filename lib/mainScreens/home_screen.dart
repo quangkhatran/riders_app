@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../global/global.dart';
 
+import './new_orders_screen.dart';
+
 import '../authentication/auth_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,6 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             if (index == 0) {
               // new available orders
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (c) => NewOrdersScreen()));
             }
             if (index == 1) {
               // parcels in progress
