@@ -5,6 +5,7 @@ import '../global/global.dart';
 import './new_orders_screen.dart';
 
 import '../authentication/auth_screen.dart';
+import '../assistantMethods/get_current_location.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -105,6 +106,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    UserLocation uLocation = UserLocation();
+    uLocation.getCurrentLocation();
   }
 
   @override

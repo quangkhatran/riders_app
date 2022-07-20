@@ -1,14 +1,51 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:riders_app/global/global.dart';
 
 import '../models/address.dart';
 
-import '../splashScreen/splash_screen.dart';
+import '../mainScreens/shipment_screen.dart';
+
+import '../assistantMethods/get_current_location.dart';
 
 class ShipmentAddressDesign extends StatelessWidget {
   final Address? model;
   final String? orderStatus;
+  final String? orderId;
+  final String? sellerId;
+  final String? orderByUser;
 
-  ShipmentAddressDesign({this.model, this.orderStatus});
+  ShipmentAddressDesign(
+      {this.model,
+      this.orderStatus,
+      this.orderId,
+      this.sellerId,
+      this.orderByUser});
+
+  confirmedParcelShipment(BuildContext context, String getOrderID,
+      String sellerId, String purchaserId) {
+    FirebaseFirestore.instance.collection('orders').doc(getOrderID).update({
+      'riderUID': sharedPreferences!.getString('uid'),
+      'riderName': sharedPreferences!.getString('name'),
+      'status': 'picking',
+      'lat': position!.latitude,
+      'lng': position!.longitude,
+      'address': completeAddress,
+    });
+
+    // send rider to shipmentScreen
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ShipmentScreen(
+                  purchaserId: purchaserId,
+                  purchaserAddress: model!.fullAddress,
+                  purchaserLat: model!.lat,
+                  purchaserLng: model!.lng,
+                  sellerId: sellerId,
+                  getOrderID: getOrderID,
+                )));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +115,11 @@ class ShipmentAddressDesign extends StatelessWidget {
                 child: Center(
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MySplashScreen()));
+                      UserLocation uLocation = UserLocation();
+                      uLocation.getCurrentLocation();
+
+                      confirmedParcelShipment(
+                          context, orderId!, sellerId!, orderByUser!);
                     },
                     child: Container(
                       decoration: const BoxDecoration(
@@ -115,12 +153,7 @@ class ShipmentAddressDesign extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Center(
             child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MySplashScreen()));
-              },
+              onTap: () {},
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
