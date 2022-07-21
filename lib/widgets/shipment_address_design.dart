@@ -5,8 +5,8 @@ import 'package:riders_app/global/global.dart';
 import '../models/address.dart';
 
 import '../mainScreens/shipment_screen.dart';
-
 import '../assistantMethods/get_current_location.dart';
+import '../splashScreen/splash_screen.dart';
 
 class ShipmentAddressDesign extends StatelessWidget {
   final Address? model;
@@ -15,12 +15,13 @@ class ShipmentAddressDesign extends StatelessWidget {
   final String? sellerId;
   final String? orderByUser;
 
-  ShipmentAddressDesign(
-      {this.model,
-      this.orderStatus,
-      this.orderId,
-      this.sellerId,
-      this.orderByUser});
+  ShipmentAddressDesign({
+    this.model,
+    this.orderStatus,
+    this.orderId,
+    this.sellerId,
+    this.orderByUser,
+  });
 
   confirmedParcelShipment(BuildContext context, String getOrderID,
       String sellerId, String purchaserId) {
@@ -153,7 +154,12 @@ class ShipmentAddressDesign extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Center(
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MySplashScreen()));
+              },
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(

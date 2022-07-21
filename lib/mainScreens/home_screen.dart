@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../global/global.dart';
-
 import './new_orders_screen.dart';
+import './parcel_in_progress_screen.dart';
 
+import '../global/global.dart';
 import '../authentication/auth_screen.dart';
 import '../assistantMethods/get_current_location.dart';
 
@@ -54,6 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             if (index == 1) {
               // parcels in progress
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (c) => ParcelInProgressScreen()));
             }
             if (index == 2) {
               // not yet delivered
