@@ -9,3 +9,4 @@ Position? position;
 List<Placemark>? placeMarks;
 String completeAddress = '';
 String perParcelDeliveryAmount = '';
+String previousEarnings = '';

@@ -28,6 +28,8 @@ class ParcelDeliveringScreen extends StatefulWidget {
 }
 
 class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen> {
+  String orderTotalAmount = '';
+
   confirmParcelHasBeenDelivered(getOrderId, sellerId, purchaserId,
       purchaserAddress, purchaserLat, purchaserLng) {
     FirebaseFirestore.instance.collection('orders').doc(getOrderId).update({
@@ -41,7 +43,9 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen> {
           .collection('riders')
           .doc(sharedPreferences!.getString('uid'))
           .update({
-        'earnings': '', // total earnings amount of rider
+        'earnings':
+            (double.parse(orderTotalAmount) + (double.parse(previousEarnings)))
+                .toString(), // total earnings amount of rider
       });
     }).then((value) {
       FirebaseFirestore.instance
@@ -66,6 +70,44 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen> {
 
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => const MySplashScreen()));
+  }
+
+  getOrderTotalAmount() {
+    FirebaseFirestore.instance
+        .collection('orders')
+        .doc(widget.getOrderId)
+        .get()
+        .then(
+      (snap) {
+        orderTotalAmount = snap.data()!['totalAmount'].toString();
+        widget.sellerId = snap.data()!['sellerUID'].toString();
+      },
+    ).then((value) {
+      getSellerData();
+    });
+  }
+
+  getSellerData() {
+    FirebaseFirestore.instance
+        .collection('sellers')
+        .doc(widget.sellerId)
+        .get()
+        .then(
+      (snap) {
+        previousEarnings = snap.data()!['earnings'].toString();
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // rider location updates
+    UserLocation uLocation = UserLocation();
+    uLocation.getCurrentLocation;
+
+    getOrderTotalAmount();
   }
 
   @override
