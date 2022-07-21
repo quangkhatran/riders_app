@@ -117,6 +117,17 @@ class _HomeScreenState extends State<HomeScreen> {
     UserLocation uLocation = UserLocation();
     uLocation.getCurrentLocation();
     getPerParcelDeliveryAmount();
+    getRiderPreviousEarnings();
+  }
+
+  getRiderPreviousEarnings() {
+    FirebaseFirestore.instance
+        .collection('riders')
+        .doc(sharedPreferences!.getString('uid'))
+        .get()
+        .then((snap) {
+      previousRiderEarnings = snap.data()!['earnings'].toString();
+    });
   }
 
   getPerParcelDeliveryAmount() {

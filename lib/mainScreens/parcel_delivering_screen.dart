@@ -32,6 +32,10 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen> {
 
   confirmParcelHasBeenDelivered(getOrderId, sellerId, purchaserId,
       purchaserAddress, purchaserLat, purchaserLng) {
+    String riderNewTotalEarningAmount = ((double.parse(previousRiderEarnings)) +
+            (double.parse(perParcelDeliveryAmount)))
+        .toString();
+
     FirebaseFirestore.instance.collection('orders').doc(getOrderId).update({
       'status': 'ended',
       'address': completeAddress,
@@ -44,15 +48,16 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen> {
           .doc(sharedPreferences!.getString('uid'))
           .update({
         'earnings':
-            (double.parse(orderTotalAmount) + (double.parse(previousEarnings)))
-                .toString(), // total earnings amount of rider
+            riderNewTotalEarningAmount, // total earnings amount of rider
       });
     }).then((value) {
       FirebaseFirestore.instance
           .collection('sellers')
           .doc(widget.sellerId)
           .update({
-        'earnings': '', // total earnings amount of seller
+        'earnings':
+            (double.parse(orderTotalAmount) + (double.parse(previousEarnings)))
+                .toString(), // total earnings amount of seller
       });
     }).then(
       (value) {
