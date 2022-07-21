@@ -4,7 +4,7 @@ import 'package:riders_app/global/global.dart';
 
 import '../models/address.dart';
 
-import '../mainScreens/shipment_screen.dart';
+import '../mainScreens/parcel_picking_screen.dart';
 import '../assistantMethods/get_current_location.dart';
 import '../splashScreen/splash_screen.dart';
 
@@ -38,7 +38,7 @@ class ShipmentAddressDesign extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ShipmentScreen(
+            builder: (context) => ParcelPickingScreen(
                   purchaserId: purchaserId,
                   purchaserAddress: model!.fullAddress,
                   purchaserLat: model!.lat,
