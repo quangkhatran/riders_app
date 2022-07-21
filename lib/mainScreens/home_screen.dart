@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import './new_orders_screen.dart';
@@ -115,6 +116,19 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     UserLocation uLocation = UserLocation();
     uLocation.getCurrentLocation();
+    getPerParcelDeliveryAmount();
+  }
+
+  getPerParcelDeliveryAmount() {
+    FirebaseFirestore.instance
+        .collection('perDelivery')
+        .doc('alizeb438')
+        .get()
+        .then(
+      (snap) {
+        perParcelDeliveryAmount = snap.data()!['amount'].toString();
+      },
+    );
   }
 
   @override
