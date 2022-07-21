@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:riders_app/splashScreen/splash_screen.dart';
+
+import '../global/global.dart';
+
+import '../maps/map_utils.dart';
 
 class ShipmentScreen extends StatefulWidget {
   String? purchaserId;
@@ -23,6 +28,26 @@ class ShipmentScreen extends StatefulWidget {
 }
 
 class _ShipmentScreenState extends State<ShipmentScreen> {
+  double? sellerLat, sellerLng;
+
+  getSellerData() async {
+    FirebaseFirestore.instance
+        .collection('sellers')
+        .doc(widget.sellerId)
+        .get()
+        .then(((DocumentSnapshot) {
+      sellerLat = DocumentSnapshot.data()!['lat'];
+      sellerLng = DocumentSnapshot.data()!['lng'];
+    }));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSellerData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +65,8 @@ class _ShipmentScreenState extends State<ShipmentScreen> {
           GestureDetector(
             onTap: () {
               // show location from rider current location towards seller location
+              MapUtils.launchMapFromSourceToDestination(position!.latitude,
+                  position!.longitude, sellerLat, sellerLng);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
