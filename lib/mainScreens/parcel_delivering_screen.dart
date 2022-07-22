@@ -123,7 +123,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'images/confirm1.png',
+            'images/confirm2.png',
             width: 350,
           ),
           const SizedBox(
@@ -153,7 +153,7 @@ class _ParcelDeliveringScreenState extends State<ParcelDeliveringScreen> {
                     SizedBox(
                       height: 12.0,
                     ),
-                    Text('Show Cafe/Restaurant Location',
+                    Text('Show Delivery Drop-off Location',
                         style: TextStyle(
                           fontFamily: 'Signatra',
                           fontSize: 18.0,
