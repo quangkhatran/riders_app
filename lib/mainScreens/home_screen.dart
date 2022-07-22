@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import './new_orders_screen.dart';
 import './parcel_in_progress_screen.dart';
 import './not_yet_delivered_screen.dart';
+import './history_screen.dart';
+import './earnings_screen.dart';
 
 import '../global/global.dart';
 import '../authentication/auth_screen.dart';
@@ -66,9 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             if (index == 3) {
               // history
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => HistoryScreen()));
             }
             if (index == 4) {
               // total earnings
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => EarningsScreen()));
             }
             if (index == 5) {
               // logout
